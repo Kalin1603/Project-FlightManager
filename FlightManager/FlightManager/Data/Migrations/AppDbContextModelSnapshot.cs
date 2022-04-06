@@ -4,16 +4,14 @@ using FlightManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlightManager.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220405171922_Flight")]
-    partial class Flight
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +98,7 @@ namespace FlightManager.Data.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("Passanger");
+                    b.ToTable("Passangers");
                 });
 
             modelBuilder.Entity("FlightManager.Data.Models.Reservation", b =>
@@ -207,6 +205,27 @@ namespace FlightManager.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2d5977c9-75c4-4503-92aa-6c0c0c3b6968",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e4c6df19-6404-496c-a87a-b04b9d34b475",
+                            Email = "admin@admin.bg",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NationalId = "1234567890",
+                            NormalizedEmail = "ADMIN@ADMIN.BG",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJxEj8W/qOK9mJVEFte7M7nhsDYUeOQCL7FEIr4BC/u9PjY38yCrsO8LwnchJmijAg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b9f7adc3-f5da-4979-86ae-ae112430bf4b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
@@ -234,6 +253,22 @@ namespace FlightManager.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "6ad75d18-c369-402f-ad0e-f98d0a386544",
+                            ConcurrencyStamp = "ba6683c0-9f79-4e33-9e87-7b3022e65bbc",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "7447febe-18c5-4985-b967-7ead4205cdd0",
+                            ConcurrencyStamp = "3ca63ae3-dd30-49ae-9b77-df6dbefe25bc",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -321,6 +356,13 @@ namespace FlightManager.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "2d5977c9-75c4-4503-92aa-6c0c0c3b6968",
+                            RoleId = "6ad75d18-c369-402f-ad0e-f98d0a386544"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
