@@ -1,5 +1,7 @@
+using FlightManager.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,5 +24,24 @@ namespace FlightManager
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void SeedDatabase(IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<AppDbContext>();
+
+                    DbInitializer.Initialize(context, services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError("An error occurred while seeding the database");
+                }
+            }
+        }
     }
 }
