@@ -12,10 +12,12 @@
 
         [Required]
         [MaxLength(60)]
+        [Display(Name = "Име")]
         public string FirstName { get; set; }
 
         [Required]
         [MaxLength(60)]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
         [Required]

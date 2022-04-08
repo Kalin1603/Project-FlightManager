@@ -7,17 +7,17 @@ namespace FlightManager.ViewModels.Users
         public string Id { get; set; }
 
         [Required]
-        [Display(Name = "First name")]
+        [Display(Name = "Име")]
         [StringLength(60, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last name")]
+        [Display(Name = "Фамилия")]
         [StringLength(60, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "Address")]
+        [Display(Name = "Адрес")]
         [StringLength(60, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string Address { get; set; }
     }
