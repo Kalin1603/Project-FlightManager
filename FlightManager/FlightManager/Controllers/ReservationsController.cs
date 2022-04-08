@@ -107,7 +107,7 @@ namespace FlightManager.Controllers
                 PassangersCount = reservation.PassangersCount,
                 IsConfirmed = reservation.IsConfirmed,
                 Email = reservation.Email,
-                UserConfirmedAccount=reservation.User!=null?$"{reservation.User.FirstName} {reservation.User.LastName}":"n/a"
+                UserConfirmedAccount = reservation.User != null ? $"{reservation.User.FirstName} {reservation.User.LastName}" : "n/a"
             };
 
             Flight flight = await _context.Flights.FindAsync(reservation.FlightId);
@@ -130,7 +130,7 @@ namespace FlightManager.Controllers
                 {
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    PhoneNumber = string.IsNullOrWhiteSpace(x.PhoneNumber)? "n/a" : x.PhoneNumber,
+                    PhoneNumber = string.IsNullOrWhiteSpace(x.PhoneNumber) ? "n/a" : x.PhoneNumber,
                     TypeOfTicket = x.TypeOfTicket
                 })
                 .ToList();
