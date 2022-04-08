@@ -46,7 +46,8 @@ namespace FlightManager.Data
                     Email = "admin@admin.bg",
                     FirstName = "Admin",
                     LastName = "Admin",
-                    NationalId = "----------"
+                    NationalId = "----------",
+                    EmailConfirmed=true
                 };
                 userManager.CreateAsync(user, "123456").Wait();
                 logger.LogInformation("User admin is add...");
@@ -61,7 +62,8 @@ namespace FlightManager.Data
                         Email = $"user{i}@user.bg",
                         FirstName = $"FName{i}",
                         LastName = $"LName{i}",
-                        NationalId = $"--------{i}"
+                        NationalId = $"--------{i}",
+                        EmailConfirmed=true
                     };
                     userManager.CreateAsync(user, "123456").Wait();
                     logger.LogInformation($"User user{i} is add...");

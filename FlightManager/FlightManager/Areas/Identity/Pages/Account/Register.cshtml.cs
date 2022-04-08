@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FlightManager.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles ="Admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;

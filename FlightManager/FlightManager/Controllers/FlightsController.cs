@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightManager.Data;
 using FlightManager.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using FlightManager.Services;
 
 namespace FlightManager.Controllers
 {
+    [Authorize]
     public class FlightsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IFlightsService flightsService;
 
-        public FlightsController(AppDbContext context)
+        public FlightsController(IFlightsService flightsService)
         {
-            _context = context;
+            this.flightsService = flightsService;
         }
 
         // GET: Flights
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Flights.ToListAsync());
+            return View(await flightsService.GetFlightsAsync());
         }
 
         // GET: Flights/Details/5
@@ -33,8 +36,7 @@ namespace FlightManager.Controllers
                 return NotFound();
             }
 
-            var flight = await _context.Flights
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var flight = await flightsService.GetFlightByIdAsync((int)id);
             if (flight == null)
             {
                 return NotFound();
@@ -58,8 +60,7 @@ namespace FlightManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(flight);
-                await _context.SaveChangesAsync();
+                await flightsService.CreateFlightASync(flight);
                 return RedirectToAction(nameof(Index));
             }
             return View(flight);
@@ -73,7 +74,7 @@ namespace FlightManager.Controllers
                 return NotFound();
             }
 
-            var flight = await _context.Flights.FindAsync(id);
+            var flight = await flightsService.FindFlightAsync((int)id);
             if (flight == null)
             {
                 return NotFound();
@@ -97,8 +98,7 @@ namespace FlightManager.Controllers
             {
                 try
                 {
-                    _context.Update(flight);
-                    await _context.SaveChangesAsync();
+                    await flightsService.UpdateFlightAsync(flight);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,8 +124,7 @@ namespace FlightManager.Controllers
                 return NotFound();
             }
 
-            var flight = await _context.Flights
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var flight = await flightsService.GetIdToDelete((int)id);
             if (flight == null)
             {
                 return NotFound();
@@ -139,15 +138,14 @@ namespace FlightManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var flight = await _context.Flights.FindAsync(id);
-            _context.Flights.Remove(flight);
-            await _context.SaveChangesAsync();
+            var flight = await flightsService.FindFlightAsync(id);
+            await flightsService.DeleteFlightConfirmedAsync(flight);
             return RedirectToAction(nameof(Index));
         }
 
         private bool FlightExists(int id)
         {
-            return _context.Flights.Any(e => e.Id == id);
+            return flightsService.CheckFlightExist(id);
         }
     }
 }

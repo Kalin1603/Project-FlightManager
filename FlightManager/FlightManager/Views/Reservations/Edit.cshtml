@@ -1,4 +1,4 @@
-﻿@model FlightManager.Data.Models.Reservation
+﻿@model FlightManager.ViewModels.Reservations.EditReservationViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,20 +9,43 @@
 <h4>Reservation</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FlightId" class="control-label"></label>
-                <select asp-for="FlightId" class="form-control" asp-items="ViewBag.FlightId"></select>
-                <span asp-validation-for="FlightId" class="text-danger"></span>
+            <input type="hidden" asp-for="Flight.Id" />
+            <input type="hidden" asp-for="Email" />
+            <div class="jumbotron">
+                <h1 class="display-4">Is confirmed</h1>
+                <span asp-validation-for="IsConfirmed" class="text-danger"></span>
+                <input asp-for="IsConfirmed" class="form-control" />
+                <p class="lead"><span class="font-weight-bold">Email: </span>@Model.Email</p>
+                <p class="lead"><span class="font-weight-bold">User confirmed: </span>@Model.UserConfirmedAccount</p>
             </div>
-            <div class="form-group">
-                <label asp-for="PassangersCount" class="control-label"></label>
-                <input asp-for="PassangersCount" class="form-control" />
-                <span asp-validation-for="PassangersCount" class="text-danger"></span>
+            <div class="jumbotron">
+                <h1 class="display-4">Flight Information</h1>
+                <p class="lead"><span class="font-weight-bold">Pilot name: </span>@Model.Flight.PilotName</p>
+                <p class="lead"><span class="font-weight-bold">Flight from: </span>@Model.Flight.FlightFrom</p>
+                <p class="lead"><span class="font-weight-bold">Flight to: </span>@Model.Flight.FlightTo</p>
+                <p class="lead"><span class="font-weight-bold">Lift off: </span>@Model.Flight.LiftOff</p>
+                <p class="lead"><span class="font-weight-bold">Land on: </span>@Model.Flight.LandOn</p>
+                <p class="lead"><span class="font-weight-bold">Flight number: </span>@Model.Flight.UniqueNumber</p>
+                <p class="lead"><span class="font-weight-bold">Plane type: </span>@Model.Flight.TypeOfPlane.</p>
+                <hr class="my-4">
             </div>
+
+            @foreach (var item in Model.Passangers)
+            {
+                <div class="jumbotron">
+                    <h1 class="display-4">Passanger </h1>
+                    <p class="lead"><span class="font-weight-bold">First name:</span> @item.FirstName</p>
+                    <p class="lead"><span class="font-weight-bold">Last name:</span> @item.LastName</p>
+                    <p class="lead"><span class="font-weight-bold">Phone number:</span> @item.PhoneNumber</p>
+                    <p class="lead"><span class="font-weight-bold">Ticket type:</span> @item.TypeOfTicket</p>
+                    <hr class="my-4">
+                </div>
+            }
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

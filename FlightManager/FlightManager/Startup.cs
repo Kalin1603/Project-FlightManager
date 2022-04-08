@@ -1,5 +1,6 @@
 using FlightManager.Data;
 using FlightManager.Data.Models;
+using FlightManager.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,7 +37,7 @@ namespace FlightManager
             services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
@@ -47,6 +48,9 @@ namespace FlightManager
                 .AddRoles<IdentityRole<string>>()
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IFlightsService, FlightsService>();
+            services.AddTransient<IPassangersService, PassangersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
